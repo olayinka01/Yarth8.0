@@ -1,5 +1,7 @@
 <?php
 
+$DATABASE_URL = parse_url('mysql://b6064bd1ea1818:d8c22337@us-cdbr-iron-east-05.cleardb.net/heroku_ed69e57d37c455e?reconnect=true');
+
 use Illuminate\Support\Str;
 
 return [
@@ -42,7 +44,8 @@ return [
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
-
+/*
+		/*Localhost credential*/
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
@@ -57,6 +60,28 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+		
+	*/
+		/*Heroku credentials*/
+		'mysql' => [
+            'driver' => 'mysql',
+            //'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'heroku_ed69e57d37c455e'),
+            'username' => env('DB_USERNAME', 'b6064bd1ea1818'),
+            'password' => env('DB_PASSWORD', 'b6064bd1ea1818'),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
